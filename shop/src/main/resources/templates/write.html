@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 추가</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="~{ nav.html::navbar }"></div>
+
+    <form action="/write" method="post">
+        상품이름<input name="title"/>
+        상품가격<input name="price"/>
+        <button type="submit">추가</button>
+    </form>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package item;
+package com.seong.shop;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
