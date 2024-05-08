@@ -34,6 +34,19 @@ public class ItemService {
         }
     }
 
+    public void editItem(Long id, String title, Integer price) {
+        System.out.println(id+":"+title+":"+price);
+        if(id!=null && !title.isEmpty() && price!=null && price>0 && title.length()<=100) {
+             Item item = new Item();
+             item.setId(id);
+             item.setTitle(title);
+             item.setPrice(price);
+             itemRepository.save(item);  // 테이블에 id 값이 있을 경우 데이터 덮어쓰기
+        }else {
+            error();
+        }
+    }
+
     public void itemDetail(Long id,Model model){
         Optional<Item> data = itemRepository.findById(id);
         // Optional == null 일 경우 error => 있는지 확인하고 데이터 가져오기

@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +46,19 @@ public class ItemController {
     String itemDetail(@PathVariable Long id, Model model){
         itemService.itemDetail(id,model);
         return "detail.html";
+    }
+
+    @GetMapping("/modify/{id}")
+    String modifyItemGet(@PathVariable Long id, Model model){
+        itemService.itemDetail(id,model);
+        return "modify.html";
+    }
+
+    @PostMapping("/modify/{id}")
+    String modifyItemPost(@PathVariable Long id, @RequestParam String title,@RequestParam Integer price, Model model){
+        itemService.editItem(id,title,price);
+        itemService.itemList(model);
+        return "redirect:/list";
     }
 
     /* Rest API 사용시 error : try~catch or ExceptionHandler

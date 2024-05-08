@@ -16,7 +16,14 @@
         <div>
             <h4 th:text="${item.title}" th:onclick="|location.href='@{ '/detail/' + ${item.id} }'|"></h4>
             <p th:text="${item.price+ '원'}"></p>
+            <a th:href="@{ '/modify/' + ${item.id}}">수정</a>
+            <button onclick="delete()">삭제</button>
         </div>
     </div>
+
+    <script>
+        function delete(){
+        }
+    </script>
 </body>
 </html>

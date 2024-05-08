@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>글 수정</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="~{ nav.html::navbar }"></div>
+
+    <div>
+        <form th:action="@{'/modify/'+${items.id}}" method="post">
+        <h4>수정페이지</h4>
+        <img src="https://placehold.co/300">
+        <input th:value="${items.title}" name="title">
+        <input th:value="${items.price + '원'}" name="price">
+        <button type="submit">수정완료</button>
+    </form>
+   </div>
+
+</body>
+</html>
