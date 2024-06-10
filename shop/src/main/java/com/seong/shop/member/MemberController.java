@@ -5,19 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
 
    private final MemberService memberService;
+   private final MemberRepository memberRepository;
 
     @GetMapping("/join")
     public String join(Authentication auth){
-        if(auth.isAuthenticated()){
+       if(auth.isAuthenticated()){
             return "redirect:/list";
         }
-
         return "join.html";
     }
 
@@ -26,7 +29,7 @@ public class MemberController {
         System.out.println(memberDTO.getUsername());
         memberService.join(memberDTO);
 
-        return "redirect:/list";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -40,7 +43,35 @@ public class MemberController {
         System.out.println(auth.getAuthorities()); // 권한
         System.out.println(auth.getName()); // id
         System.out.println(auth.isAuthenticated()); // 권한여부
+        System.out.println(auth.getPrincipal());
 
         return "mypage.html";
     }
+
+    @GetMapping("/user/1")
+    @ResponseBody
+    public MemberData getUser(){
+        Optional<Member> member = memberRepository.findById(1L);
+        Member result = member.get();
+        MemberData data = new MemberData(result.getUsername(),result.getName());
+
+        return data;
+    }
+
+    // db 값을 변환해서 전송할 때 -> 필요한 데이터만 전송가능
+    /* 장점
+       - 데이터의 타입 체크 용이
+       - 재사용 쉬움
+     */
+    class MemberData{
+        public String username;
+        public String name;
+
+        MemberData(String username, String name){
+            this.username = username;
+            this.name = name;
+        }
+
+    }
+
 }

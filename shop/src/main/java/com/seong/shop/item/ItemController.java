@@ -43,6 +43,13 @@ public class ItemController {
         return "detail.html";
     }
 
+    @GetMapping("/list/page/1")
+    String pagenation(Model model){
+        itemService.pagination(model);
+
+        return "list.html";
+    }
+
     /* Rest API 사용시 error : try~catch or ExceptionHandler
     // ExceptionHandler : 같은 파일의 모든 API 의 에러 캐치 -> 안의 코드 실행
     @ExceptionHandler(Exception.class)

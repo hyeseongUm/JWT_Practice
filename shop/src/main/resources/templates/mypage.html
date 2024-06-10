@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>마이페이지</title>
@@ -10,7 +10,7 @@
     마이페이지
     <div sec:authentication="principal"></div>
     <div sec:authentication="principal.username"></div>
-    <div sec:authorize="hasAuthority('Admin')">
+    <div sec:authorize="hasAuthority('ROLE_Admin')">
         hasAuthority('권한') 가지고 있는 경우에만 보임
     </div>
     <div sec:authorize="isAuthenticated()">

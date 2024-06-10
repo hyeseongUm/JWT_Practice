@@ -28,9 +28,9 @@ public class MyUserDetailsService implements UserDetailsService {
         Member data =  member.get();
         List<GrantedAuthority> auth = new ArrayList<>();
         if (data.getUsername().equals("nks0561")){
-            auth.add(new SimpleGrantedAuthority("Admin"));
+            auth.add(new SimpleGrantedAuthority("ROLE_Admin"));
         }else {
-            auth.add(new SimpleGrantedAuthority("User"));
+            auth.add(new SimpleGrantedAuthority("ROLE_User"));
         }
 
         // return 값이 Authentication 에 담김
