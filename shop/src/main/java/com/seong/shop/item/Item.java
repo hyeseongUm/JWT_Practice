@@ -1,4 +1,4 @@
-package com.seong.shop;
+package com.seong.shop.item;
 
 import jakarta.persistence.*;
 import lombok.Getter;

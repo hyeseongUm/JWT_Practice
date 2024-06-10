@@ -1,4 +1,4 @@
-package com.seong.shop;
+package com.seong.shop.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,19 +29,6 @@ public class ItemService {
             item.setTitle(title);
             item.setPrice(price);
             itemRepository.save(item);  // 테이블에 데이터 넣기
-        }else {
-            error();
-        }
-    }
-
-    public void editItem(Long id, String title, Integer price) {
-        System.out.println(id+":"+title+":"+price);
-        if(id!=null && !title.isEmpty() && price!=null && price>0 && title.length()<=100) {
-             Item item = new Item();
-             item.setId(id);
-             item.setTitle(title);
-             item.setPrice(price);
-             itemRepository.save(item);  // 테이블에 id 값이 있을 경우 데이터 덮어쓰기
         }else {
             error();
         }
