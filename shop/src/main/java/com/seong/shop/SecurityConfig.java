@@ -19,7 +19,7 @@ public class SecurityConfig {
         http.csrf((csrf)->csrf.disable());
         http.authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/my-page").hasAnyRole("Admin")
-                        .anyRequest().permitAll()
+                        .requestMatchers("/**").permitAll()
         /* requestMatchers("/**") : 모든 페이지, requestMatchers("/url") : 해당 url 로그인 검사 permitAll() : 아무나 접속허용*/
         );
         http.formLogin(login->login

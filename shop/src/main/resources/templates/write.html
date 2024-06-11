@@ -13,5 +13,30 @@
         상품가격<input name="price"/>
         <button type="submit">추가</button>
     </form>
+
+    <input type="file" onchange="getURL(this)">
+
+    <!-- e.files[0].name : 유저가 고른 파일의 이름
+        encodeURIComponent : 파일명의 특수문자 같은 것들 빼주는 인코딩
+        fetch().then().then() 을 붙여야 server에서 보낸 text를 받을 수 있지만 then 대신에 await 을 붙여도 됨
+    -->
+    <script>
+        async function getURL(e){
+            let filename = encodeURIComponent(e.files[0].name)
+            console.log("파일명 : "+filename)
+            let URL = await fetch('/presigned-url?filename='+filename)
+            URL = await URL.text()
+            console.log("URL : "+URL)
+
+            let result = await fetch(URL,{
+                method : 'PUT',
+                body : e.files[0]
+            })
+
+            console.log("결과 : "+result)
+            console.log("결과url : "+result.url)
+
+        }
+    </script>
 </body>
 </html>

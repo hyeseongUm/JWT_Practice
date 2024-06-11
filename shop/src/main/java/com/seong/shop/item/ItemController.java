@@ -3,9 +3,7 @@ package com.seong.shop.item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -13,6 +11,7 @@ public class ItemController {
 
     // @RequiredArgsConstructor => Lombok 없이 사용 => Constructor 만들기
     private final ItemService itemService;
+    private final S3Service s3Service;
 
     // 만들어진 Constructor
    /* @Autowired
@@ -43,11 +42,21 @@ public class ItemController {
         return "detail.html";
     }
 
-    @GetMapping("/list/page/1")
-    String pagenation(Model model){
-        itemService.pagination(model);
+    @GetMapping("/list/page/{no}")
+    String pagenation(Model model, @PathVariable Integer no){
+        itemService.pagination(model, no);
 
         return "list.html";
+    }
+
+    @GetMapping("/presigned-url")
+    @ResponseBody
+    String getURL(@RequestParam String filename){
+        System.out.println("파일명 : "+filename);
+        String url = s3Service.createPresignedUrl("test/" + filename);
+        System.out.println("presigned-url : "+url);
+
+        return url;
     }
 
     /* Rest API 사용시 error : try~catch or ExceptionHandler
