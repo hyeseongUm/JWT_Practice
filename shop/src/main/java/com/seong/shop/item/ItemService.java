@@ -20,7 +20,6 @@ public class ItemService {
 
     public void itemList(Model model){
         List<Item> data = itemRepository.findAll(); // 모든 데이터 가져오기
-        System.out.println(data);
         model.addAttribute("items",data);
     }
 
@@ -56,6 +55,21 @@ public class ItemService {
         model.addAttribute("items", result);
     }
 
+    public void search(String searchText){
+        // title 컬럼에서 searchText 를 포함하고 있는 모든 행 가져오기 (All 생략가능)
+        List<Item> search =  itemRepository.findAllByTitleContains(searchText);
+        System.out.println(search);
+        // itemRepository.findAllByTitle(searchText);
+        // => title 컬럼에서 searchText 와 완전히 일치한 행 모두 가져오기
+
+        /*
+           데이터가 많을 경우 검색하는데 시간이 오래걸림
+           -> 컬럼을 복사하여 정렬을 해두면 빠르게 검색가능 ( index : 컬럼을 복사한 사본 )
+           -> index 가 있으면 컴퓨터가 binary search 해줌
+           -> db에 데이터 용량 증가, 원본 테이블 추가/수정/삭제 시 index 도 수정/삭제 반영 -> 소요 시간 증가
+           => 꼭 필요한 컬럼에만 index 만들기!!!
+        */
+    }
 
     public void error(){
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

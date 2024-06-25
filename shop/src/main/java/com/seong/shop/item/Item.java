@@ -4,9 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity     //DB table 생성
+@Entity     // DB table 생성
 @Setter
 @Getter
+@Table(indexes = @Index(columnList = "title", name = "")) // Index 만들기 (어떤컬럼, 작명) -> 해당 컬럼 복사 후 자동 정렬 / 여러개 index 생성도 가능
 public class Item {
 
     // @Id => 자동으로 unique = true 설정
