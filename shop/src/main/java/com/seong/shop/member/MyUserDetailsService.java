@@ -34,6 +34,6 @@ public class MyUserDetailsService implements UserDetailsService {
         }
 
         // return 값이 Authentication 에 담김
-        return new User(data.getUsername(),data.getPassword(),auth);
+        return new CustomUser(data.getUsername(),data.getPassword(),auth, data.getName());
     }
 }

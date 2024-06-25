@@ -7,6 +7,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +24,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/my-page").hasAnyRole("Admin")
                         .requestMatchers("/**").permitAll()
+                        .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
         /* requestMatchers("/**") : 모든 페이지, requestMatchers("/url") : 해당 url 로그인 검사 permitAll() : 아무나 접속허용*/
         );
         http.formLogin(login->login
@@ -27,12 +32,26 @@ public class SecurityConfig {
                 .loginProcessingUrl("/loginReg"));
         http.logout(logout-> logout.logoutUrl("/logout"));
 
-
         return http.build();
     }
 
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.addExposedHeader("x-auth-token");
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 }

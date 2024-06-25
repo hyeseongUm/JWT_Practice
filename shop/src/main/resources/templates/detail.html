@@ -14,5 +14,16 @@
         <h4 th:text="${items.title}"></h4>
         <p th:text="${items.price + '원'}"></p>
     </div>
+
+    <form method="post" action="/comment">
+        <input type="text" name="content" style="display : inline">
+        <input type="hidden" name="parentId" th:value="${items.id}">
+        <button>등록</button>
+    </form>
+
+    <div th:each="comment : ${comments}">
+        <div th:text="${comment.username}"></div>
+        <div th:text="${comment.content}"></div>
+    </div>
 </body>
 </html>

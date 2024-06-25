@@ -1,5 +1,6 @@
 package com.seong.shop.item;
 
+import com.seong.shop.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ public class ItemController {
     // @RequiredArgsConstructor => Lombok 없이 사용 => Constructor 만들기
     private final ItemService itemService;
     private final S3Service s3Service;
+    private final CommentService commentService;
 
     // 만들어진 Constructor
    /* @Autowired
@@ -39,6 +41,8 @@ public class ItemController {
     @GetMapping("/detail/{id}")
     String itemDetail(@PathVariable Long id, Model model){
         itemService.itemDetail(id,model);
+        commentService.list(id, model);
+
         return "detail.html";
     }
 

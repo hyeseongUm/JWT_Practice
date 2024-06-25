@@ -24,11 +24,11 @@
         async function getURL(e){
             let filename = encodeURIComponent(e.files[0].name)
             console.log("파일명 : "+filename)
-            let URL = await fetch('/presigned-url?filename='+filename)
-            URL = await URL.text()
-            console.log("URL : "+URL)
+            let response = await fetch('/presigned-url?filename='+filename)
+            response = await response.text()
+            console.log("URL : "+response)
 
-            let result = await fetch(URL,{
+            let result = await fetch(response, {
                 method : 'PUT',
                 body : e.files[0]
             })
