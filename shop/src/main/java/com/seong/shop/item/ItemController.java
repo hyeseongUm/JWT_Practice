@@ -64,10 +64,10 @@ public class ItemController {
     }
 
     @PostMapping("/search")
-    String search(@RequestParam String searchText){
-        itemService.search(searchText);
+    String search(@RequestParam String searchText, Model model){
+        itemService.search(searchText, model);
 
-        return "list.html";
+        return "search.html";
     }
 
     /* Rest API 사용시 error : try~catch or ExceptionHandler
